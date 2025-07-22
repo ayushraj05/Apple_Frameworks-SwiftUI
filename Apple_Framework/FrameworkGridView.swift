@@ -11,18 +11,26 @@ struct FrameworkGridView: View {
     
     let coloum: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
-        ZStack{
-            LinearGradient(colors: [.customGray,.gray, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            LazyVGrid(columns: coloum){
-                ForEach(MockData.frameworks, id: \.id){ framework in
-                    FrameworkTitleView(name: framework.name, imageName: framework.imageName)
-                }
+                    
+
+        NavigationView{
+            ZStack{
+                LinearGradient(colors: [.customGray,.gray, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea()
                 
+                ScrollView{
+                    LazyVGrid(columns: coloum){
+                        ForEach(MockData.frameworks, id: \.id){ framework in
+                            FrameworkTitleView(framework: framework)
+                        }
+                        
+                    }
+                    .navigationTitle("Frameworks iOS")
+                }
             }
-            .padding()
+            
         }
-        .padding(.top, 20)
+        
         
         
     }
@@ -33,20 +41,20 @@ struct FrameworkGridView: View {
 }
 
 struct FrameworkTitleView: View {
-    let name : String
-    let imageName : String
+    let framework : Framework
     var body : some View{
         VStack{
-            Image(imageName)
+            Image(framework.imageName)
                 .resizable()
                 .frame(width: 90, height: 90 )
                 .scaledToFit()
-            Text(name)
+            Text(framework.name)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .scaledToFit()
                 .minimumScaleFactor(0.5)
         }
+        .padding()
     }
     
 }
