@@ -11,7 +11,7 @@ struct FrameworkGridView: View {
     
     @StateObject var viewModel = FrameworkGridViewModel()
     
-    let coloum: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
                     
         NavigationView{
@@ -20,7 +20,7 @@ struct FrameworkGridView: View {
                     .ignoresSafeArea()
                 
                 ScrollView{
-                    LazyVGrid(columns: coloum){
+                    LazyVGrid(columns: viewModel.coloum){
                         ForEach(MockData.frameworks, id: \.id){ framework in
                             FrameworkTitleView(framework: framework)
                                 .onTapGesture {
@@ -45,24 +45,4 @@ struct FrameworkGridView: View {
 
 #Preview {
     FrameworkGridView()
-}
-
-struct FrameworkTitleView: View {
-    let framework : Framework
-    var body : some View{
-        VStack{
-            Image(framework.imageName)
-                .resizable()
-                .frame(width: 90, height: 90 )
-                .scaledToFit()
-            Text(framework.name)
-                .font(.title2)
-                .foregroundStyle(Color(.white))
-                .fontWeight(.semibold)
-                .scaledToFit()
-                .minimumScaleFactor(0.5)
-        }
-        .padding()
-    }
-    
 }

@@ -15,19 +15,7 @@ struct FrameworkDetailView: View {
         ZStack{
             LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack{
-                HStack{
-                    Spacer()
-                    Button{
-                        isShowingDetailView.toggle()
-                    }label: {
-                        Image(systemName: "xmark")
-                            .foregroundStyle(Color(.label))
-                            .imageScale(.large)
-                            .frame(width: 44, height: 44)
-                        
-                    }
-                }
-                .padding()
+                CrossButtonView(isShowingDetailView: $isShowingDetailView)
                 Spacer()
                 
                 FrameworkTitleView(framework: framework)
