@@ -10,6 +10,7 @@ import SwiftUI
 struct FrameworkDetailView: View {
     var framework : Framework
     @Binding var isShowingDetailView: Bool
+    @State private var isShowingWebView = false
     var body: some View {
         ZStack{
             LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -39,12 +40,16 @@ struct FrameworkDetailView: View {
                 Spacer()
                 
                 Button{
+                    isShowingWebView = true
                     
                 } label: {
                     AFButtons(title: "Learn More")
                         
                 }
                 .padding()
+            }
+            .fullScreenCover(isPresented: $isShowingWebView){
+                SafariView(url: URL(string :framework.urlString) ?? URL(string: "https://www.google.com")!)
             }
         }
         .ignoresSafeArea()
