@@ -9,10 +9,11 @@ import SwiftUI
 
 struct FrameworkGridView: View {
     
+    @StateObject var viewModel = FrameworkGridViewModel()
+    
     let coloum: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
                     
-
         NavigationView{
             ZStack{
                 LinearGradient(colors: [.customGray,.gray, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -22,10 +23,16 @@ struct FrameworkGridView: View {
                     LazyVGrid(columns: coloum){
                         ForEach(MockData.frameworks, id: \.id){ framework in
                             FrameworkTitleView(framework: framework)
+                                .onTapGesture {
+                                    viewModel.SelectedFramework = framework
+                                }
                         }
                         
                     }
                     .navigationTitle("Frameworks iOS")
+                    .sheet(isPresented: $viewModel.isShowingDetailView){
+                        FrameworkDetailView(framework: viewModel.SelectedFramework!, isShowingDetailView: $viewModel.isShowingDetailView)
+                    }
                 }
             }
             
@@ -50,6 +57,7 @@ struct FrameworkTitleView: View {
                 .scaledToFit()
             Text(framework.name)
                 .font(.title2)
+                .foregroundStyle(Color(.white))
                 .fontWeight(.semibold)
                 .scaledToFit()
                 .minimumScaleFactor(0.5)

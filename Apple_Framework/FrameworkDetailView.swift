@@ -9,42 +9,55 @@ import SwiftUI
 
 struct FrameworkDetailView: View {
     var framework : Framework
+    @Binding var isShowingDetailView: Bool
+    @State private var isShowingWebView = false
     var body: some View {
-        VStack{
-            HStack{
-                Spacer()
-                Button{
-                    
-                }label: {
-                    Image(systemName: "xmark")
-                        .foregroundStyle(Color(.label))
-                        .imageScale(.large)
-                        .frame(width: 44, height: 44)
-                    
+        ZStack{
+            LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack{
+                HStack{
+                    Spacer()
+                    Button{
+                        isShowingDetailView.toggle()
+                    }label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(Color(.label))
+                            .imageScale(.large)
+                            .frame(width: 44, height: 44)
+                        
+                    }
                 }
-            }
-            .padding()
-            Spacer()
-            
-            FrameworkTitleView(framework: framework)
-            
-            Text(framework.description)
-                .font(.body)
                 .padding()
-            
-            Spacer()
-            
-            Button{
+                Spacer()
                 
-            } label: {
-                AFButtons(title: "Learn More")
+                FrameworkTitleView(framework: framework)
+                
+                Text(framework.description)
+                    .font(.body)
+                    .foregroundStyle(Color(.white))
+                    .padding()
+                
+                Spacer()
+                
+                Button{
+                    isShowingWebView = true
                     
+                } label: {
+                    AFButtons(title: "Learn More")
+                        
+                }
+                .padding()
+            }
+            .fullScreenCover(isPresented: $isShowingWebView){
+                SafariView(url: URL(string :framework.urlString) ?? URL(string: "https://www.google.com")!)
             }
         }
+        .ignoresSafeArea()
+        
         
     }
 }
 
 #Preview {
-    FrameworkDetailView(framework : MockData.sampleFramework)
+    FrameworkDetailView(framework : MockData.sampleFramework, isShowingDetailView: .constant(false))
 }
