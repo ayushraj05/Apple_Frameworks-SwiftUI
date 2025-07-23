@@ -10,37 +10,42 @@ import SwiftUI
 struct FrameworkDetailView: View {
     var framework : Framework
     var body: some View {
-        VStack{
-            HStack{
+        ZStack{
+            LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack{
+                HStack{
+                    Spacer()
+                    Button{
+                        
+                    }label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(Color(.label))
+                            .imageScale(.large)
+                            .frame(width: 44, height: 44)
+                        
+                    }
+                }
+                .padding()
                 Spacer()
+                
+                FrameworkTitleView(framework: framework)
+                
+                Text(framework.description)
+                    .font(.body)
+                    .foregroundStyle(Color(.white))
+                    .padding()
+                
+                Spacer()
+                
                 Button{
                     
-                }label: {
-                    Image(systemName: "xmark")
-                        .foregroundStyle(Color(.label))
-                        .imageScale(.large)
-                        .frame(width: 44, height: 44)
-                    
+                } label: {
+                    AFButtons(title: "Learn More")
+                        
                 }
             }
-            .padding()
-            Spacer()
-            
-            FrameworkTitleView(framework: framework)
-            
-            Text(framework.description)
-                .font(.body)
-                .padding()
-            
-            Spacer()
-            
-            Button{
-                
-            } label: {
-                AFButtons(title: "Learn More")
-                    
-            }
         }
+        
         
     }
 }
