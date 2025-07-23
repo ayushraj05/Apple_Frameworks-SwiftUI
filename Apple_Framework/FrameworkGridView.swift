@@ -14,7 +14,6 @@ struct FrameworkGridView: View {
     let coloum: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
                     
-
         NavigationView{
             ZStack{
                 LinearGradient(colors: [.customGray,.gray, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
