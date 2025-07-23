@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FrameworkDetailView: View {
     var framework : Framework
+    @Binding var isShowingDetailView: Bool
     var body: some View {
         ZStack{
             LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -16,7 +17,7 @@ struct FrameworkDetailView: View {
                 HStack{
                     Spacer()
                     Button{
-                        
+                        isShowingDetailView.toggle()
                     }label: {
                         Image(systemName: "xmark")
                             .foregroundStyle(Color(.label))
@@ -43,13 +44,15 @@ struct FrameworkDetailView: View {
                     AFButtons(title: "Learn More")
                         
                 }
+                .padding()
             }
         }
+        .ignoresSafeArea()
         
         
     }
 }
 
 #Preview {
-    FrameworkDetailView(framework : MockData.sampleFramework)
+    FrameworkDetailView(framework : MockData.sampleFramework, isShowingDetailView: .constant(false))
 }
