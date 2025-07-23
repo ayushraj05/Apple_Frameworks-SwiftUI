@@ -9,13 +9,12 @@ import SwiftUI
 
 struct FrameworkDetailView: View {
     var framework : Framework
-    @Binding var isShowingDetailView: Bool
     @State private var isShowingWebView = false
     var body: some View {
         ZStack{
             LinearGradient(colors: [.white,.customGray,.black], startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack{
-                CrossButtonView(isShowingDetailView: $isShowingDetailView)
+//                CrossButtonView(isShowingDetailView: $isShowingDetailView)
                 Spacer()
                 
                 FrameworkTitleView(framework: framework)
@@ -47,5 +46,5 @@ struct FrameworkDetailView: View {
 }
 
 #Preview {
-    FrameworkDetailView(framework : MockData.sampleFramework, isShowingDetailView: .constant(false))
+    FrameworkDetailView(framework : MockData.sampleFramework)
 }

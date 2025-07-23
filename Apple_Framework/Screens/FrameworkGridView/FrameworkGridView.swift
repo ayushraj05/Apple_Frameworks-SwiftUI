@@ -14,7 +14,7 @@ struct FrameworkGridView: View {
     
     var body: some View {
                     
-        NavigationView{
+        NavigationStack{
             ZStack{
                 LinearGradient(colors: [.customGray,.gray, .white], startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
@@ -22,21 +22,24 @@ struct FrameworkGridView: View {
                 ScrollView{
                     LazyVGrid(columns: viewModel.coloum){
                         ForEach(MockData.frameworks, id: \.id){ framework in
-                            FrameworkTitleView(framework: framework)
-                                .onTapGesture {
-                                    viewModel.SelectedFramework = framework
-                                }
+                            NavigationLink(value: framework){
+                                FrameworkTitleView(framework: framework)
+                            }
                         }
                         
                     }
                     .navigationTitle("Frameworks iOS")
-                    .sheet(isPresented: $viewModel.isShowingDetailView){
-                        FrameworkDetailView(framework: viewModel.SelectedFramework!, isShowingDetailView: $viewModel.isShowingDetailView)
-                    }
+                    
                 }
+                
+                .navigationDestination(for: Framework.self) { framework in
+                    FrameworkDetailView(framework: framework)
+                }
+                
             }
             
         }
+        .tint(.black)
         
         
         
